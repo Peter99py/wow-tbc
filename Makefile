@@ -4,7 +4,7 @@
 
 COMPOSE_DIR = cmangos-tbc/bots
 
-.PHONY: up down status logs console help create-account
+.PHONY: up down status logs console help
 
 up:  ## Sobe o servidor (mangosd + realmd + database)
 	@echo "🚀 Iniciando servidor WoW TBC..."
@@ -26,26 +26,13 @@ status: ## Mostra status dos containers
 logs: ## Mostra os logs do servidor em tempo real
 	@cd $(COMPOSE_DIR) && docker compose logs -f mangosd
 
-console: ## Abre o console do servidor
-	@echo "🔗 Conectando ao console (os logs aparecem - digite mesmo assim)..."
-	@echo "    Comandos: account create nome senha"
+console: ## Abre o console do servidor (digite os comandos mesmo vendo logs)
+	@echo "🔗 Conectando ao console do servidor..."
+	@echo "    Digite os comandos normalmente (os logs não atrapalham)"
+	@echo "    Ex: account create nome senha"
 	@echo "    Para sair: Ctrl+P, solta, Ctrl+Q"
 	@echo ""
 	docker attach $$(cd $(COMPOSE_DIR) && docker compose ps -q mangosd)
-
-# Cria conta enviando comando direto pro console do servidor
-create-account: ## Cria conta GM: make create-account U=nome S=senha
-	@if [ -z "$(U)" ]; then \
-		echo "❌ Uso: make create-account U=meunome S=minhasenha" ; \
-		exit 1 ; \
-	fi ; \
-	PASS="$(or $(S),$(U))" ; \
-	CID=$$(cd $(COMPOSE_DIR) && docker compose ps -q mangosd) ; \
-	printf 'account create %s %s\naccount set addon %s 1\naccount set gmlevel %s 3 -1\n' "$(U)" "$$PASS" "$(U)" "$(U)" | docker exec -i $$$$CID /opt/mangos/bin/mangosd --pipe 2>/dev/null || \
-	printf 'account create %s %s\naccount set addon %s 1\naccount set gmlevel %s 3 -1\n' "$(U)" "$$PASS" "$(U)" "$(U)" | docker attach $$CID 2>/dev/null; \
-	echo "✅ Conta '$(U)' criada!" ; \
-	echo "   Usuário: $(U)" ; \
-	echo "   Senha: $$PASS"
 
 restart: down up ## Reinicia o servidor
 	@echo "🔄 Servidor reiniciado!"
@@ -53,11 +40,12 @@ restart: down up ## Reinicia o servidor
 help: ## Mostra esta ajuda
 	@echo "🎮 Comandos disponíveis:"
 	@echo ""
-	@echo "  make up                  - Liga o servidor"
-	@echo "  make down                - Desliga o servidor"
-	@echo "  make status              - Mostra status dos serviços"
-	@echo "  make logs                - Acompanhar logs do servidor"
-	@echo "  make console             - Abrir console do servidor"
-	@echo "  make create-account U=nome S=senha - Cria conta GM"
-	@echo "  make restart             - Reinicia o servidor"
-	@echo "  make help                - Mostra esta ajuda"
+	@echo "  make up        - Liga o servidor"
+	@echo "  make down      - Desliga o servidor"
+	@echo "  make status    - Mostra status dos serviços"
+	@echo "  make logs      - Acompanhar logs do servidor"
+	@echo "  make console   - Abrir console para criar contas"
+	@echo "  make restart   - Reinicia o servidor"
+	@echo "  make help      - Mostra esta ajuda"
+	@echo ""
+	@echo "📋 Contas disponíveis: ADMINISTRATOR / administrator"
