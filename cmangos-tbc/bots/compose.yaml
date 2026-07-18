@@ -1,7 +1,7 @@
 services:
   database:
     image: docker.io/thoriumlxc/cmangos-tbcdb:${CALVER_TAG}
-    restart: unless-stopped
+    restart: no
     healthcheck:
       test: ['CMD', 'healthcheck.sh', '--connect', '--innodb_initialized']
       interval: 1m
@@ -34,7 +34,7 @@ services:
     image: tiredofit/db-backup
     depends_on:
       - database
-    restart: unless-stopped
+    restart: no
     volumes:
       - ./backups:/backup
     environment:
@@ -58,7 +58,7 @@ services:
     image: phpmyadmin
     depends_on:
       - database
-    restart: unless-stopped
+    restart: no
     ports:
       - 8080:80
     environment:
@@ -84,7 +84,7 @@ services:
       timeout: 3s
       retries: 5
       start_period: 5m
-    restart: unless-stopped
+    restart: no
     volumes:
       - ./realmd.conf:/opt/mangos/etc/realmd.conf:ro
       - ./logs/realmd:/opt/mangos/storage/logs
@@ -104,7 +104,7 @@ services:
     depends_on:
       wait-for-db:
         condition: service_completed_successfully
-    restart: unless-stopped
+    restart: no
     stop_grace_period: 2m
     healthcheck:
       test: ['CMD', 'nc', '-z', 'localhost', '8085']
