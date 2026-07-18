@@ -61,45 +61,402 @@ Configure a função:
 
 ## 3. Comandos de Bot
 
-### Comandos `.bot` (no chat com ponto)
+> **Nota:** Os comandos abaixo foram compilados do [Playerbot Commands Wiki](https://github.com/mod-playerbots/mod-playerbots/wiki/Playerbot-Commands).
+> Alguns podem usar o prefixo `.playerbots bot` em vez de `.bot` dependendo da build. Teste no jogo.
 
-| Comando | Nível | Descrição |
-|---------|-------|-----------|
-| `.bot add NOME` | Jogador | Adiciona bot ao grupo |
-| `.bot remove NOME` | Jogador | Remove bot do grupo |
-| `.bot tweak` | Jogador | Abre menu de configuração do bot |
-| `.bot lag` | Jogador | Verifica lag dos bots |
-| `.bot stats` | Jogador | Mostra status dos bots |
-| `.bot summon` | Jogador | Summona o bot até você |
-| `.bot sendto` | Jogador | Envia o bot para um local |
+---
 
-### Comandos de chat com o bot (digite no chat sem ponto)
+### Comandos de Setup de Altbots
 
-Digite diretamente no chat para dar ordens ao bot que estiver por perto.
+Altbots são personagens que você cria na sua conta e depois atribui controle de bot.
 
 | Comando | Descrição |
 |---------|-----------|
-| `follow` | Bot segue você |
-| `stay` | Bot fica parado onde está |
-| `attack` | Bot ataca seu alvo atual |
-| `pull` | Bot puxa/puxa aggro do mob alvo |
-| `flee` | Bot foge do combate |
-| `grind` | Bot começa a farmar mobs sozinho |
-| `loot` | Bot saqueia corpos próximos |
-| `revive` | Bot revive você se estiver morto |
-| `spells` | Bot lista as spells dele |
-| `report` | Bot mostra status atual |
-| `stats` | Bot mostra estatísticas |
-| `talents` | Bot mostra árvore de talentos |
-| `help` | Lista todos os comandos disponíveis |
-| `vendor` | Bot vende itens cinza/lixo no vendedor mais próximo |
-| `repair` | Bot repara equipamento no vendedor mais próximo |
-| `quit` | Bot sai do grupo |
-| `trade` | Bot abre janela de troca com você |
-| `give` | Bot passa itens para você |
-| `mana` | Bot informa % de mana atual |
-| `home` | Bot retorna ao coração |
-| `trainer` | Bot procura o treinador mais próximo |
+| `.bot add [nome1,nome2,nome3]` | Adiciona bots ao grupo (login) |
+| `.bot addaccount [accountname]` | Adiciona todos personagens de outra conta como bots |
+| `.bot remove [nome1,nome2,nome3]` | Remove bots do grupo (logout) |
+| `.bot add *` | Adiciona todos bots que estão no seu grupo/raid |
+| `.bot remove *` | Remove todos bots do grupo/raid |
+| `.bot refresh=raid *` | Reseta todas as instâncias salvas dos bots no raid |
+| `maintenance` | Bot aprende todas spells disponíveis, repara, e reabastece itens (whisper p/ individual ou /p ou /r p/ grupo) |
+| `autogear` | Bot equipa gear automaticamente baseado nas configs de qualidade |
+| `talents` | Mostra a spec atual do bot |
+| `talents spec list` | Lista specs disponíveis para a classe |
+| `talents spec [nome]` | Força o bot a trocar para a spec escolhida |
+| `talents apply <link>` | Aplica link de talentos ao bot |
+| `glyphs` | Lista os glifos equipados do bot |
+| `glyph equip [id1 id2 ...]` | Bot aplica glifos |
+| `reset botAI` | Reseta configurações do bot |
+| `reset` | Reseta ações atuais do bot (cast, movimento, etc) |
+
+---
+
+### Comandos Gerais de Grupo/Raid
+
+| Comando | Descrição |
+|---------|-----------|
+| `summon` | Summona o bot até você |
+| `release` | Solta o espírito quando morto |
+| `revive` | Revive perto de um espírito curador |
+| `leave` | Sai do grupo |
+| `attack` | Ataca o alvo selecionado |
+| `follow` | Bot corre até você (/w individual, /p ou /r para grupo) |
+| `flee` | Corre até você ignorando tudo ao redor |
+| `stay` | Fica parado no lugar |
+| `runaway` | Kiteia o mob (puxa ele correndo) |
+| `grind` | Ataca qualquer coisa por perto |
+| `disperse set x` | Força bots a manter x jardas de distância entre si |
+| `disperse disable` | Reseta distância de dispersão para o padrão |
+| `give leader` | Bot passa liderança do grupo para você |
+| `lfg` | Bot entra no grupo/raid preenchendo função vaga (tank/heal/dps) |
+| `lfg x` | Mesmo que acima, mas para tamanho específico [5,10,20,25,40] |
+
+**Você pode especificar por grupo ou tipo para alguns comandos como `attack` e `follow`:**
+- `@group1 follow`
+- `@group2 attack`
+- `@tank`, `@dps`, `@heal`, `@ranged`, `@rangeddps`, `@meleedps`, `@[className]`
+- Combinados: `@Group1,4` ou `@group2-5,8`
+
+---
+
+### Comandos de Spells
+
+| Comando | Descrição |
+|---------|-----------|
+| `spells` | Mostra as spells do bot |
+| `cast [nome_spell]` | Bot lança a spell (/w individual) |
+| `cast [nome_spell] on [PlayerName]` | Bot lança spell em um jogador específico |
+| `ss +[spell id]` | Adiciona spell à lista de exclusão |
+| `ss -[spell id]` | Remove spell da lista de exclusão |
+| `ss reset` | Limpa toda lista de exclusão |
+| `trainer` | Mostra o que o bot pode aprender no treinador selecionado |
+| `trainer learn` | Aprende do treinador selecionado |
+
+---
+
+### Comandos de Target (RTSC / RTI)
+
+**RTSC** — sistema para salvar posições e mandar bots para elas. Use `rtsc` para ativar e ganhar a spell "aedm" no seu livro de habilidades. Aponte e clique no chão para marcar uma posição.
+
+**RTI** — sistema para focar bots em alvos específicos usando os ícones padrão do WoW.
+
+| Comando | Descrição |
+|---------|-----------|
+| `rtsc` | Ativa RTSC e dá a spell "aedm" |
+| `rtsc cancel` | Desativa RTSC e remove a spell |
+| `rtsc save [#]` | Salva posição atual como número (use aedm no chão) |
+| `rtsc unsave [#]` | Limpa posição salva |
+| `rtsc go [#]` | Comanda bots a irem para posição salva |
+| `rtsc go save` | Bots voltam para posição RTSC salva |
+| `[nome/grupo] rtsc toggle` | Alterna para bot salvar posição com clique do mouse |
+| `rti <icone>` | Define ícone alvo para bot priorizar (skull, cross, circle, star, etc) |
+| `attack rti target` | Comanda bots a atacarem o alvo RTI |
+| `rti cc <icone>` | Define ícone específico como alvo de CC (padrão é moon) |
+| `focus heal +[PlayerName]` | Adiciona alguém à lista de foco de cura do bot |
+| `focus heal -[PlayerName]` | Remove alguém da lista de foco de cura |
+| `focus heal +[P1],+[P2],-[P3]` | Adiciona/remove múltiplos de uma vez |
+| `focus heal ?` | Mostra a lista de foco de cura atual |
+| `focus heal clear` | Limpa todos os focos de cura |
+
+---
+
+### Comandos de Loot
+
+`ll` = loot list (lista de saque)
+
+| Comando | Descrição |
+|---------|-----------|
+| `nc +loot` | Ativa saque automático |
+| `ll all` | Saqueia tudo |
+| `ll normal` | Saqueia exceto itens BOP (bind-on-pickup) |
+| `ll gray` | Saqueia só itens cinza |
+| `ll quest` | Saqueia só itens de quest |
+| `ll skill` | Saqueia só itens de profissão (herbalismo, mineração, etc) |
+| `ll [item]` | Adiciona item específico à lista de saque |
+| `ll -[item]` | Remove item específico da lista de saque |
+
+---
+
+### Comandos de Itens
+
+| Comando | Descrição |
+|---------|-----------|
+| `[item]` | Bot diz quantos itens tem e status de quest |
+| `e [item]` | Equipa item |
+| `ue [item]` | Remove item equipado |
+| `u [item]` | Usa item |
+| `u [item] [target]` | Usa item em um alvo (ex: usar gema em item) |
+| `open items` | Abre itens no inventário que têm loot (ex: Bolsa de Espólios) |
+| `destroy [item]` | Destroi item |
+| `roll [item]` | Bots no grupo/raid rolam pelo item se for upgrade |
+| `roll` | Todos os bots rolam |
+| `s [item]` | Vende item |
+| `s *` | Vende todos itens cinza |
+| `s vendor` | Vende todos itens que podem ser vendidos |
+| `b [item]` | Compra item |
+| `2g 3s 5c` | Bot te dá dinheiro (ouro, prata, cobre) |
+| `bank [item]` | Deposita item no banco |
+| `bank -[item]` | Retira item do banco |
+| `gb [item]` | Deposita item no guild bank |
+| `gb -[item]` | Retira item do guild bank |
+| `outfit ?` | Lista outfits salvos |
+| `outfit <nome> +[item]` | Adiciona item ao outfit (cria se novo) |
+| `outfit <nome> -[item]` | Remove item do outfit |
+| `outfit <nome> equip` | Equipa os itens do outfit |
+| `outfit <nome> replace` | Remove tudo e equipa o outfit |
+| `outfit <nome> update` | Sobrescreve outfit com itens equipados atuais |
+| `outfit <nome> reset` | Limpa todos itens do outfit |
+
+---
+
+### Comandos de Quest
+
+| Comando | Descrição |
+|---------|-----------|
+| `quests` | Mostra resumo das quests |
+| `quests all` | Lista com links de todas quests no log |
+| `accept [quest]` | Aceita quest no quest giver selecionado |
+| `accept *` | Aceita todas quests do quest giver |
+| `drop [quest]` | Abandona quest |
+| `r [item]` | Escolhe recompensa de quest |
+| `[quest]` | Mostra status da quest |
+| `talk` | Fala com NPC selecionado (para completar quest) |
+| `u [game object]` | Usa objeto no mundo |
+
+---
+
+### Comandos de Pet
+
+| Comando | Descrição |
+|---------|-----------|
+| `pet aggressive` | Modo agressivo |
+| `pet passive` | Modo passivo |
+| `pet defensive` | Modo defensivo |
+| `pet stance` | Mostra postura atual do pet |
+| `pet attack` | Pet ataca alvo selecionado |
+| `pet follow` | Pet segue o dono |
+| `pet stay` | Pet fica parado |
+
+---
+
+### Comandos de Hunter (Domar)
+
+| Comando | Descrição |
+|---------|-----------|
+| `tame` | Ajuda sobre domar |
+| `tame name "nome"` | Invoca um pet domável pelo nome |
+| `tame id "id"` | Invoca um pet domável pelo ID do banco |
+| `tame family` | Ajuda sobre famílias |
+| `tame family "familia"` | Invoca aleatoriamente um pet da família |
+| `tame rename "novo nome"` | Renomeia o pet atual |
+
+---
+
+### Comandos Estratégicos (Combat e Non-Combat)
+
+Bots usam duas categorias de estratégias: **combat (co)** e **non-combat (nc)**.
+
+Você pode adicionar (+), remover (-) ou alternar (~) estratégias:
+```
+co +strategy1,-strategy2,~strategy3
+nc +strategy1,-strategy2,~strategy3
+```
+
+Consultar estratégias atuais:
+```
+co ?
+nc ?
+```
+
+Resetar estratégias:
+```
+co !
+nc !
+```
+
+#### Estratégias de Combate (co)
+
+| Estratégia | Descrição |
+|------------|-----------|
+| `tank` | Usa habilidades de ameaça (warrior, paladin, druid bear) |
+| `tank assist` | Tank puxa mobs de outros |
+| `dps` | Usa habilidades de dano |
+| `cc` | Usa habilidades de crowd control (requer alvo RTI) |
+| `assist` | Foca um mob de cada vez |
+| `aoe` | Ataca múltiplos mobs ao mesmo tempo |
+| `boost` | Usa CDs grandes (útil para bursts em bosses) |
+| `threat` | DPS evita ativamente pegar aggro |
+| `grind` | Ataca qualquer alvo visível |
+| `heal` | Foca em cura do grupo |
+| `focus` | Para de usar AoE e foca em um único alvo |
+| `avoid aoe` | Evita automaticamente AoE prejudicial |
+| `save mana` | Curadores economizam mana quando abaixo do limite |
+| `healer dps` | Curadores usam dano se tiver mana suficiente |
+| `tank face` | Garante que o alvo não fique de frente para o grupo |
+| `behind` | Move para as costas do alvo |
+| `wait for attack` | Bot espera X segundos antes de atacar |
+| `pull` | Tank puxa mob com habilidade de longo alcance |
+| `pull my target` | Tank puxa seu alvo atual |
+| `pull rti target` | Tank puxa o alvo marcado com RTI |
+| `pull back` | Tank puxa e volta para posição inicial |
+| `mark rti` | Bot marca automaticamente alvos não marcados |
+
+#### Estratégias de Não-Combate (nc)
+
+| Estratégia | Descrição |
+|------------|-----------|
+| `new rpg` | Bot segue estratégia RPG (quests + grind) |
+| `grind` | Busca alvos de nível apropriado para farmar |
+| `follow` | Bot segue o mestre |
+| `food` | Iniciar/parar de comer/beber |
+| `pvp` | Ativar/desativar modo PvP |
+| `loot` | Ativar saque automático |
+
+#### Estratégias Específicas por Classe
+
+**Paladino (nc):**
+| Estratégia | Descrição |
+|------------|-----------|
+| `bmight` | Benção de Poder |
+| `bwisdom` | Benção de Sabedoria |
+| `bkings` | Benção dos Reis |
+| `bsanc` | Benção de Santificação |
+| `rfire` | Aura de Fogo |
+| `rfrost` | Aura de Gelo |
+| `rshadow` | Aura de Sombra |
+| `baoe` | Aura de Retribuição |
+| `barmor` | Aura de Devoção |
+| `bcast` | Aura de Concentração |
+| `bspeed` | Aura do Cruzado |
+
+**Hunter (nc):**
+| Estratégia | Descrição |
+|------------|-----------|
+| `bdps` | Aspecto da Agilidade |
+| `bspeed` | Aspecto da Matilha/Chita |
+| `bmana` | Aspecto da Víbora |
+| `rnature` | Aspecto da Natureza |
+
+**Warlock (nc) — Pets:**
+| Estratégia | Descrição |
+|------------|-----------|
+| `imp` | Usa Imp |
+| `voidwalker` | Usa Voidwalker |
+| `succubus` | Usa Succubus |
+| `felhunter` | Usa Felhunter |
+| `felguard` | Usa Felguard (Demonologia) |
+
+**Warlock (nc) — Soulstone:**
+| Estratégia | Descrição |
+|------------|-----------|
+| `ss master` | Soulstone no mestre |
+| `ss self` | Soulstone em si mesmo |
+| `ss tank` | Soulstone no tank |
+| `ss healer` | Soulstone no healer |
+
+---
+
+### Estratégias para Raids (ativadas automaticamente ao entrar)
+
+| Estratégia | Raid |
+|------------|------|
+| `moltencore` | Molten Core |
+| `bwl` | Blackwing Lair |
+| `aq20` | Ruins of Ahn'Qiraj |
+| `karazhan` | Karazhan |
+| `gruulslair` | Gruul's Lair |
+| `magtheridon` | Magtheridon's Lair |
+| `ssc` | Serpentshrine Cavern |
+| `naxx` | Naxxramas |
+| `onyxia` | Onyxia's Lair |
+
+---
+
+### Comandos de Profissão
+
+| Comando | Descrição |
+|---------|-----------|
+| `master fishing` | Bot pesca quando perto de água (se configurado) |
+
+---
+
+### Comandos de Account Linking
+
+Permite linkar contas diferentes para controle de altbots (requer `AiPlayerbot.AllowTrustedAccountBots = 1` no config).
+
+| Comando | Descrição |
+|---------|-----------|
+| `.bot account setKey [chave]` | Define uma chave de segurança para a conta atual |
+| `.bot account link [ACCOUNTNAME] [chave]` | Linka uma conta usando a chave de segurança dela |
+| `.bot account linkedAccounts` | Lista contas linkadas |
+| `.bot account unlink [ACCOUNTNAME]` | Remove link de conta |
+
+---
+
+### Comandos de Console (mangosd)
+
+| Comando | Descrição |
+|---------|-----------|
+| `playerbot pmon toggle` | Ativa/desativa monitor de performance |
+| `playerbot pmon stack` | Mostra performance acumulada |
+| `playerbot pmon tick` | Mostra médias de performance por ciclo |
+| `playerbot pmon reset` | Reseta monitor de performance |
+| `playerbot rndbot reset` | Limpa tabela de eventos de rndbots (requer restart) |
+| `playerbot rndbot stats` | Mostra stats dos rndbots (nível, classe, etc) |
+| `playerbot rndbot reload` | Recarrega playerbots.conf |
+| `playerbot rndbot update` | Dispara um tick completo de AI |
+| `playerbot rndbot init` | Re-rolla os rndbots (útil após mudar configs) |
+| `playerbot rndbot clear` | Reseta bots para nível inicial |
+| `playerbot rndbot level` | Sobe nível de todos rndbots em 1 |
+| `playerbot rndbot refresh` | Revive, reseta AI e re-rolla gear dos rndbots |
+| `playerbot rndbot teleport` | Teleporta todos rndbots para área apropriada |
+
+---
+
+### Reações Automáticas
+
+Os bots reagem automaticamente às ações do líder do grupo:
+
+| Sua ação | Reação do bot |
+|----------|---------------|
+| Aceitar uma quest | Bot aceita também |
+| Falar com quest giver | Bot entrega quests completadas |
+| Usar meeting stone | Bot teleporta junto |
+| Usar objeto no mundo | Bot também usa |
+| Abrir janela de troca | Bot mostra inventário e começa a trocar |
+| Convidar para grupo/raid | Bot aceita |
+| Iniciar ready check | Bot diz seu status |
+| Montar/desmontar | Monta/desmonta também |
+| Atravessar portal de dungeon | Bot segue para dentro |
+
+---
+
+### Comandos de addClass (usar rndbots para testes)
+
+| Comando | Descrição |
+|---------|-----------|
+| `.bot addclass [className]` | Invoca um rndbot da classe desejada (dk = death knight) |
+
+---
+
+### Comandos de Override (sobrescrever comportamento)
+
+| Comando | Descrição |
+|---------|-----------|
+| `do attack` | Força bot a atacar alvo |
+| `do attack my target` | Força bot a atacar seu alvo |
+| `do loot` | Força bot a saquear |
+| `do add all loot` | Verifica todo corpo e objeto para saque |
+
+---
+
+### Comandos Gerais / Misc
+
+| Comando | Descrição |
+|---------|-----------|
+| `who` | Mostra raça, spec, talentos, classe, nível, iLVL e zona do bot |
+| `who [profissão]` | Mostra nível da profissão do bot |
+| `help` | Bot lista todos comandos disponíveis no chat |
 
 ---
 
