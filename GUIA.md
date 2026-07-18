@@ -92,6 +92,14 @@ Digite diretamente no chat para dar ordens ao bot que estiver por perto.
 | `stats` | Bot mostra estatísticas |
 | `talents` | Bot mostra árvore de talentos |
 | `help` | Lista todos os comandos disponíveis |
+| `vendor` | Bot vende itens cinza/lixo no vendedor mais próximo |
+| `repair` | Bot repara equipamento no vendedor mais próximo |
+| `quit` | Bot sai do grupo |
+| `trade` | Bot abre janela de troca com você |
+| `give` | Bot passa itens para você |
+| `mana` | Bot informa % de mana atual |
+| `home` | Bot retorna ao coração |
+| `trainer` | Bot procura o treinador mais próximo |
 
 ---
 
