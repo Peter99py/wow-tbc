@@ -7,6 +7,9 @@ COMPOSE_DIR = cmangos-tbc/bots
 .PHONY: up down status logs console help
 
 up:  ## Sobe o servidor (mangosd + realmd + database)
+	@echo "🚀 Atualizando IP do realm..."
+	bash cmangos-tbc/scripts/update-realm-ip.sh
+	@echo ""
 	@echo "🚀 Iniciando servidor WoW TBC..."
 	cd $(COMPOSE_DIR) && docker compose up -d mangosd realmd
 	@echo ""
