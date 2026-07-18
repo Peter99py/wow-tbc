@@ -61,13 +61,37 @@ Configure a função:
 
 ## 3. Comandos de Bot
 
+### Comandos `.bot` (no chat com ponto)
+
 | Comando | Nível | Descrição |
 |---------|-------|-----------|
 | `.bot add NOME` | Jogador | Adiciona bot ao grupo |
 | `.bot remove NOME` | Jogador | Remove bot do grupo |
-| `.bot tweak` | Jogador | Abre menu de configuração |
+| `.bot tweak` | Jogador | Abre menu de configuração do bot |
 | `.bot lag` | Jogador | Verifica lag dos bots |
 | `.bot stats` | Jogador | Mostra status dos bots |
+| `.bot summon` | Jogador | Summona o bot até você |
+| `.bot sendto` | Jogador | Envia o bot para um local |
+
+### Comandos de chat com o bot (digite no chat sem ponto)
+
+Digite diretamente no chat para dar ordens ao bot que estiver por perto.
+
+| Comando | Descrição |
+|---------|-----------|
+| `follow` | Bot segue você |
+| `stay` | Bot fica parado onde está |
+| `attack` | Bot ataca seu alvo atual |
+| `pull` | Bot puxa/puxa aggro do mob alvo |
+| `flee` | Bot foge do combate |
+| `grind` | Bot começa a farmar mobs sozinho |
+| `loot` | Bot saqueia corpos próximos |
+| `revive` | Bot revive você se estiver morto |
+| `spells` | Bot lista as spells dele |
+| `report` | Bot mostra status atual |
+| `stats` | Bot mostra estatísticas |
+| `talents` | Bot mostra árvore de talentos |
+| `help` | Lista todos os comandos disponíveis |
 
 ---
 
